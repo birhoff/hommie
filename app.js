@@ -1,10 +1,11 @@
-const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const boom = require('boom');
 
 const apiRouter = require('./routes/api');
+const formatHttpErrorMessage = require('./utils/format-http-error-message');
 
 const app = express();
 
@@ -25,13 +26,17 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    if (!err) {
+        return next();
+    }
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+    const httpError = err.isBoom ? err : boom.boomify(err, { statusCode: 500 });
+    const errorMessage = formatHttpErrorMessage(req, httpError);
+    console.error(errorMessage, httpError);
+
+    if (!res.headersSent) {
+        res.status(httpError.output.statusCode).json(httpError.output.payload);
+    }
 });
 
 module.exports = app;
