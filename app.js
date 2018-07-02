@@ -17,6 +17,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+// Put all API endpoints under '/api'
+app.use('/api', (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
