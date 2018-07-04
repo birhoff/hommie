@@ -32,6 +32,7 @@ const responseTypes = {
     },
     no_item: {
         buy_visibility_class: 'youla-hidden',
-        buy_controls_disabled: true
+        buy_controls_disabled: true,
+        no_items_visible_class: 'youla-visible'
     }
 };
