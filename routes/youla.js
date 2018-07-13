@@ -28,7 +28,10 @@ module.exports = async (req, res, next) => {
 const responseTypes = {
     empty: {},
     new_price: {
-        price: '999 p'
+        price: '999 ₽'
+    },
+    long_price: {
+        price: '999999999999999999999999999999999999 ₽'
     },
     no_item: {
         buy_visibility_class: 'youla-hidden',
