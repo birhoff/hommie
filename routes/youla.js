@@ -33,6 +33,9 @@ const responseTypes = {
     long_price: {
         price: '999999999999999999999999999999999999 ₽'
     },
+    max_valid_price: {
+        price: '399 921 ₽'
+    },
     no_item: {
         buy_visibility_class: 'youla-hidden',
         buy_controls_disabled: true,
